@@ -10,6 +10,11 @@ import Collapse from "@material-ui/core/Collapse";
 import IconButton from "@material-ui/core/IconButton";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
+import ExpansionPanel from "@material-ui/core/ExpansionPanel";
+import ExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import Typography from "@material-ui/core/Typography";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: 345,
@@ -28,11 +33,16 @@ const useStyles = makeStyles((theme) => ({
   expandOpen: {
     transform: "rotate(180deg)",
   },
+  heading: {
+    fontSize: theme.typography.pxToRem(15),
+    fontWeight: theme.typography.fontWeightRegular,
+  },
 }));
 
 const style = {
   padding: "20px",
 };
+
 function Series({ series }) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
@@ -58,7 +68,7 @@ function Series({ series }) {
 
       <CardActionArea>
         <CardMedia className={classes.media} image={series.image.medium} />
-        <CardContent>For a short summar please click on the arrow</CardContent>
+        {/* <CardContent>For a short summar please click on the arrow</CardContent>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -73,7 +83,21 @@ function Series({ series }) {
           <CardContent>
             <span>{series.summary.replace(/<\/?[^>]+(>|$)/g, "")}</span>
           </CardContent>
-        </Collapse>
+        </Collapse> */}
+        <ExpansionPanel>
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography className={classes.heading}>Short summary</Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Typography style={{ textTransform: "none" }}>
+              {series.summary.replace(/<\/?[^>]+(>|$)/g, "")}
+            </Typography>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
       </CardActionArea>
     </Card>
   );
